@@ -1,0 +1,47 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+      - main
+      - qa
+      - dev
+  pull_request:
+    branches:
+      - main
+      - qa
+      - dev
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        run: bash deploy.sh -e ci -c build
+
+      - name: Up docker services
+        run: bash deploy.sh -e ci -c 'up -d'
+      
+      - name: Check installed dependencies 
+        run: bash deploy.sh -e ci -c 'exec web bandit -r ./ && safety check'
+
+      - name: Check outdated dependencies
+        run: bash deploy.sh -e ci -c 'exec web pip list --outdated'
+
+      - name: Test django
+        run: bash deploy.sh -e ci -c 'exec web coverage run --source='.' manage.py test'
+      
+      - name: Coverage django
+        run: bash deploy.sh -e ci -c 'exec web coverage report'
+      
+  build:
+
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # Only run on 'main' branch
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: bash deploy.sh -e ci -c build

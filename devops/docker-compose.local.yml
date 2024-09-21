@@ -1,0 +1,44 @@
+services:
+  front:
+    build:
+      context: ../src/front
+      dockerfile: ./Dockerfile
+    command: yarn dev
+    env_file:
+      - ./env_file/$APP_ENVIROMENT.env
+    volumes:
+      - ../src/front/next:/home/app/next/
+  web:
+    build:
+      context: ../src/web
+      dockerfile: ./Dockerfile
+      args:
+        APP_REQUIREMENT_FILE: '$APP_ENVIROMENT.txt'
+        APP_IMAGE_FROM: 'python:3.12-bullseye'
+    # command: python3 -m debugpy --listen 0.0.0.0:11102 manage.py runserver 0.0.0.0:8000
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ../src/web/portfolio:/opt/portfolio/web
+      - static_volume:/opt/portfolio/static
+      - media_volume:/opt/portfolio/media
+    ports:
+      - '11102:11102' # debug py
+      - '11101:8000'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  lb:
+    build:
+      context: ../src/lb
+      dockerfile: ./Dockerfile
+    ports:
+      - 11100:80
+    depends_on:
+      - web
+    volumes:
+      - static_volume:/home/app/static
+      - media_volume:/home/app/media
+    
+volumes:
+  postgres_volume:
+  static_volume:
+  media_volume:
