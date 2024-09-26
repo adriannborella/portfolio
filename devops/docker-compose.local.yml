@@ -4,8 +4,6 @@ services:
       context: ../src/front
       dockerfile: ./Dockerfile
     command: yarn dev
-    env_file:
-      - ./env_file/$APP_ENVIROMENT.env
     volumes:
       - ../src/front/src:/home/app/
       - static_next_next:/home/app/.next/static

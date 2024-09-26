@@ -5,7 +5,7 @@ services:
       dockerfile: ./Dockerfile
     command: yarn dev
     env_file:
-      - ./env_file/$APP_ENVIROMENT.env
+      - ./env_file/ci.env
     volumes:
       - ../src/front/next:/home/app/next/
   web:
@@ -17,6 +17,8 @@ services:
         APP_REQUIREMENT_FILE: '$APP_ENVIROMENT.txt'
         APP_IMAGE_FROM: 'python:3.9-bullseye'
     command: python3 manage.py runserver
+    env_file:
+      - ./env_file/ci.env
     depends_on:
       - db
     volumes:
@@ -28,7 +30,7 @@ services:
       context: ../src/db
       dockerfile: ./Dockerfile
     env_file:
-      - ./env_file/$APP_ENVIROMENT.env
+      - ./env_file/ci.env
     volumes:
       - postgres_volume:/var/lib/mysql
   lb:

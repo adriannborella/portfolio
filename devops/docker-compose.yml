@@ -2,11 +2,11 @@ name: portfolio
 services:
   front:
     env_file:
-      - ./env_file/$APP_ENVIROMENT.env
+      - ./env_file/variables.env
   web:
     entrypoint: ['/cache/entrypoint.sh']
     env_file:
-      - ./env_file/$APP_ENVIROMENT.env
+      - ./env_file/variables.env
   lb:
     depends_on:
       - web
