@@ -13,7 +13,9 @@ class ProjectSerializer(serializers.ModelSerializer):
         queryset=Technology.objects.all(), many=True
     )
 
-    technologies_names = TechnologySerializer(many=True, read_only=True)
+    technologies_names = TechnologySerializer(
+        many=True, read_only=True, source="technologies"
+    )
 
     class Meta:
         model = Project
@@ -25,4 +27,4 @@ class ProjectSerializer(serializers.ModelSerializer):
             "technologies",
             "technologies_names",
         ]
-        readonly = ["technologies_names"]
+        read_only_fields = ["technologies_names"]

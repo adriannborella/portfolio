@@ -12,7 +12,7 @@ class Project(models.Model):
     name = models.CharField(max_length=200)
     url = models.URLField()
     description = models.TextField()
-    technologies = models.ManyToManyField(Technology)
+    technologies = models.ManyToManyField(Technology, related_name="projects")
 
     def __str__(self) -> str:
         return self.name

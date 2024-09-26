@@ -1,5 +1,5 @@
 # Use the official Nginx image
-FROM nginx:1.23-alpine
+FROM nginx:1.27.1-alpine
 
 RUN rm /etc/nginx/conf.d/default.conf
 

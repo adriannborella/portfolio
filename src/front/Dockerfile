@@ -1,14 +1,14 @@
 # Stage 1: Build the Next.js app
-FROM node:19-alpine AS builder
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
 # Install dependencies
-COPY next/package.json ./
+COPY src/package.json ./
 RUN yarn
 
 # Copy the Next.js app source code
-COPY ./next .
+COPY ./src .
 
 # Build the Next.js app
 RUN yarn build
@@ -16,10 +16,10 @@ RUN yarn build
 # Stage 2: Run the Next.js app
 FROM node:19-alpine
 
-WORKDIR /home/app/next
+WORKDIR /home/app
 
 # Copy the built app from the builder stage
-COPY --from=builder ./ /home/app/next
+COPY --from=builder ./ /home/app
 
 # Expose the port Next.js listens on
 EXPOSE 3000

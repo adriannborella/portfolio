@@ -7,7 +7,9 @@ services:
     env_file:
       - ./env_file/$APP_ENVIROMENT.env
     volumes:
-      - ../src/front/next:/home/app/next/
+      - ../src/front/src:/home/app/
+      - static_next_next:/home/app/.next/static
+      - public_next_volume:/home/app/public
   web:
     build:
       context: ../src/web
@@ -37,8 +39,12 @@ services:
     volumes:
       - static_volume:/home/app/static
       - media_volume:/home/app/media
+      - static_next_next:/home/app/next_static
+      - public_next_volume:/home/app/next_public
     
 volumes:
   postgres_volume:
   static_volume:
   media_volume:
+  static_next_next:
+  public_next_volume:

@@ -1,0 +1,51 @@
+.projectDetail {
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.techPill {
+  background-color: #0070f3;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 1rem;
+}
+
+.projectLink a {
+  display: inline-block;
+  background-color: #ff5733;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.projectLink a:hover {
+  background-color: #ff3300;
+}
