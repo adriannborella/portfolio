@@ -1,5 +1,4 @@
 import React from 'react';
-import RootLayout from '../layout';
 
 const ExperiencePage: React.FC = () => {
     return (

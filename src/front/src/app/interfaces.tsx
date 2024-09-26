@@ -8,7 +8,8 @@ export interface ProjectInterface {
     description: string,
     name: string,
     technologies: Array<number>,
-    technologies_names: Array<TechnologiInterface>
+    technologies_names: Array<TechnologiInterface>,
+    url: string
 }
 
 export interface WebResponse<T> {

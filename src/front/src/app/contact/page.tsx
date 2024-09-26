@@ -1,12 +1,11 @@
 import React from 'react';
-import RootLayout from '../layout';
 
 const ContactPage: React.FC = () => {
     return (
         <main>
             <h1>Contact Me</h1>
             <p>
-                Feel free to reach out if you'd like to connect with me for potential job
+                Feel free to reach out if you would like to connect with me for potential job
                 opportunities or collaborations!
             </p>
             <p>

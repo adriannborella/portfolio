@@ -8,7 +8,7 @@ export default async function Home() {
     return (
         <main>
             <h1>My Portfolio</h1>
-            <p>Welcome to my portfolio! Here are some of the projects I've worked on, you can filter by technology</p>
+            <p>Welcome to my portfolio! Here are some of the projects I have worked on, you can filter by technology</p>
             <ProjectList projects={projects.results} technologies={technologies.results} />
         </main>
     );
