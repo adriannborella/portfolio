@@ -1,6 +1,8 @@
 import ProjectList from "../components/ProjectList";
 import { getAllProjects, getAllTechnologies } from "../api";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
     const projects = await getAllProjects({ client: false, technologies: [] })
     const technologies = await getAllTechnologies()
