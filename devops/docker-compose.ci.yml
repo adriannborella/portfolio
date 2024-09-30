@@ -1,13 +1,15 @@
 services:
   front:
+    image: $APP_FRONT_IMAGE
     build:
       context: ../src/front
       dockerfile: ./Dockerfile
-    command: yarn dev
+    command: yarn start
     env_file:
       - ./env_file/ci.env
     volumes:
-      - ../src/front/next:/home/app/next/
+      - static_next_next:/home/app/.next/static
+      - public_next_volume:/home/app/public
   web:
     image: $APP_WEB_IMAGE
     build:
@@ -15,8 +17,8 @@ services:
       dockerfile: ./Dockerfile
       args:
         APP_REQUIREMENT_FILE: '$APP_ENVIROMENT.txt'
-        APP_IMAGE_FROM: 'python:3.9-bullseye'
-    command: python3 manage.py runserver
+        APP_IMAGE_FROM: 'python:3.12-bullseye'
+    command: gunicorn --bind 0.0.0.0:8000 -w 8 src.wsgi:application
     env_file:
       - ./env_file/ci.env
     depends_on:
@@ -24,22 +26,28 @@ services:
     volumes:
       - static_volume:/opt/portfolio/static
       - media_volume:/opt/portfolio/media
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   db:
-    image: $APP_DB_IMAGE
-    build:
-      context: ../src/db
-      dockerfile: ./Dockerfile
+    image: postgres:16
     env_file:
       - ./env_file/ci.env
-    volumes:
-      - postgres_volume:/var/lib/mysql
   lb:
     image: $APP_LB_IMAGE
     build:
       context: ../src/lb
       dockerfile: ./Dockerfile
+    ports:
+        - 11120:80
+    volumes:
+      - static_volume:/home/app/static
+      - media_volume:/home/app/media
+      - static_next_next:/home/app/next_static
+      - public_next_volume:/home/app/next_public
     
 volumes:
-  postgres_volume:
   static_volume:
   media_volume:
+  static_next_next:
+  public_next_volume:
+

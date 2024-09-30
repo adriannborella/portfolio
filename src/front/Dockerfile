@@ -19,7 +19,7 @@ FROM node:19-alpine
 WORKDIR /home/app
 
 # Copy the built app from the builder stage
-COPY --from=builder ./ /home/app
+COPY --from=builder ./app /home/app
 
 # Expose the port Next.js listens on
 EXPOSE 3000

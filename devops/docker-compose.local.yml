@@ -43,7 +43,6 @@ services:
       - public_next_volume:/home/app/next_public
     
 volumes:
-  postgres_volume:
   static_volume:
   media_volume:
   static_next_next:

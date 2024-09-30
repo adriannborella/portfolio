@@ -23,21 +23,26 @@ then
 fi
 
 export APP_COMMIT_VERSION=$APP_COMMIT
-export COMPOSE_PROJECT_NAME=ap_$ENVIROMENT
+
+# name of the stack
+export COMPOSE_PROJECT_NAME=ab_porfolio_$ENVIROMENT
 
 
 export APP_ENVIROMENT=$ENVIROMENT
-export APP_DOCKER_REGISTRY='adriannborella/'
+export APP_DOCKER_REGISTRY='adriannborella1988/'
 
-export APP_WEB_IMAGE=$AP_DOCKER_REGISTRY'pf-web:'$APP_COMMIT_VERSION
-export APP_FRONT_IMAGE=$AP_DOCKER_REGISTRY'pf-front:'$APP_COMMIT_VERSION
-export APP_LB_IMAGE=$AP_DOCKER_REGISTRY'pf-lb:'$APP_COMMIT_VERSION
+export APP_WEB_IMAGE=$APP_DOCKER_REGISTRY'ab_portfolio_web:'$APP_COMMIT_VERSION
+export APP_FRONT_IMAGE=$APP_DOCKER_REGISTRY'ab_portfolio_front:'$APP_COMMIT_VERSION
+export APP_LB_IMAGE=$APP_DOCKER_REGISTRY'ab_portfolio_lb:'$APP_COMMIT_VERSION
 
 printenv | grep APP
 
-if [ "$CMD_DOCKER" = "push-web" ] || [ "$CMD_DOCKER" = "push-lb" ]
+if [ "$CMD_DOCKER" = "push-images" ]
 then
-    bash scripts/compose-ci.sh $CMD_DOCKER
+    echo "Pushin images"
+    docker push $APP_LB_IMAGE
+    docker push $APP_WEB_IMAGE
+    docker push $APP_FRONT_IMAGE
 else
     docker compose -f devops/docker-compose.yml -f devops/docker-compose.$ENVIROMENT.yml $CMD_DOCKER
 fi

@@ -46,13 +46,6 @@ services:
     volumes:
       - static_volume:/opt/portfolio/static
       - media_volume:/opt/portfolio/media
-  db:
-    image: 'postgres:15.3-alpine'
-    env_file:
-      - ./db.env
-    volumes:
-      - postgres_volume:/var/lib/mysql
-    restart: always
   lb:
     image: $AP_LB_IMAGE
     ports:
