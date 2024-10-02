@@ -5,6 +5,8 @@ services:
     volumes:
       - static_next_next:/home/app/.next/static
       - public_next_volume:/home/app/public
+    networks:
+      - deploy
   web:
     image: $APP_WEB_IMAGE
     entrypoint: ['/cache/entrypoint.sh']
@@ -12,8 +14,9 @@ services:
     depends_on:
       - web_migrate
       - web_collectstatic
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    networks:
+      - ab_datastore_postgres
+      - deploy
     volumes:
       - static_volume:/opt/portfolio/static
       - media_volume:/opt/portfolio/media
@@ -22,10 +25,10 @@ services:
     image: $APP_WEB_IMAGE
     entrypoint: ['/cache/entrypoint.sh']
     command: python manage.py migrate
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     env_file:
       - ./env_file/variables.env
+    networks:
+      - ab_datastore_postgres
   web_collectstatic:
     image: $APP_WEB_IMAGE
     command: python manage.py collectstatic --clear --no-input
@@ -37,7 +40,7 @@ services:
   lb:
     image: $APP_LB_IMAGE
     ports:
-      - 11120:80
+      - 11201:80
     volumes:
       - static_volume:/home/app/static
       - media_volume:/home/app/media
@@ -46,6 +49,15 @@ services:
     depends_on:
       - web
     restart: always
+    networks:
+      - deploy
+
+networks:
+  ab_datastore_postgres:
+    external: true
+  deploy:
+    driver: bridge
+
 volumes:
   static_volume:
   media_volume:
