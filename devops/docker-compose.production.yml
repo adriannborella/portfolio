@@ -18,8 +18,8 @@ services:
       - ab_datastore_postgres
       - deploy
     volumes:
-      - static_volume:/opt/portfolio/static
-      - media_volume:/opt/portfolio/media
+      - static_web_volume:/opt/portfolio/static
+      - media_web_volume:/opt/portfolio/media
     restart: always
   web_migrate:
     image: $APP_WEB_IMAGE
@@ -35,15 +35,15 @@ services:
     env_file:
       - ./env_file/variables.env
     volumes:
-      - static_volume:/opt/portfolio/static
-      - media_volume:/opt/portfolio/media
+      - static_web_volume:/opt/portfolio/static
+      - media_web_volume:/opt/portfolio/media
   lb:
     image: $APP_LB_IMAGE
     ports:
       - 11201:80
     volumes:
-      - static_volume:/home/app/static
-      - media_volume:/home/app/media
+      - static_web_volume:/home/app/static
+      - media_web_volume:/home/app/media
       - static_next_next:/home/app/next_static
       - public_next_volume:/home/app/next_public
     depends_on:
@@ -59,8 +59,8 @@ networks:
     driver: bridge
 
 volumes:
-  static_volume:
-  media_volume:
+  static_web_volume:
+  media_web_volume:
   static_next_next:
   public_next_volume:
 

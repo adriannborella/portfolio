@@ -25,7 +25,7 @@ fi
 export APP_COMMIT_VERSION=$APP_COMMIT
 
 # name of the stack
-export COMPOSE_PROJECT_NAME=ab_porfolio_$ENVIROMENT
+export COMPOSE_PROJECT_NAME=ab_porfolio
 # Platform for oracle server
 export DOCKER_DEFAULT_PLATFORM=linux/arm64
 

@@ -16,8 +16,8 @@ from unipath import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
-BASE_DIR = Path(__file__).ancestor(3)
-DIR_PRE_APP = BASE_DIR.ancestor(2)
+BASE_DIR = Path(__file__).ancestor(2)
+DIR_PRE_APP = BASE_DIR.ancestor(1)
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("APP_ENVIROMENT") == "local"
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
-
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS").split(",")
 
 # Application definition
 
@@ -147,6 +147,7 @@ MEDIA_URL = "/media/"
 STATIC_ROOT = DIR_PRE_APP.child("static")
 MEDIA_ROOT = DIR_PRE_APP.child("media")
 
+print(STATIC_ROOT)
 # This setting defines the additional locations the staticfiles app will traverse if the FileSystemFinder finder is
 # enabled, e.g.
 # if you use the collectstatic or findstatic management command or use the static file serving view.

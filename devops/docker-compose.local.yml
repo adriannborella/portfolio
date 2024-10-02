@@ -10,8 +10,8 @@ services:
     command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - ../src/web/portfolio:/opt/portfolio/web
-      - static_volume:/opt/portfolio/static
-      - media_volume:/opt/portfolio/media
+      - static_web_volume:/opt/portfolio/static
+      - media_web_volume:/opt/portfolio/media
     ports:
       - '11102:11102' # debug py
       - '11101:8000'
@@ -37,13 +37,13 @@ services:
     depends_on:
       - web
     volumes:
-      - static_volume:/home/app/static
-      - media_volume:/home/app/media
+      - static_web_volume:/home/app/static
+      - media_web_volume:/home/app/media
       - static_next_next:/home/app/next_static
       - public_next_volume:/home/app/next_public
     
 volumes:
-  static_volume:
-  media_volume:
+  static_web_volume:
+  media_web_volume:
   static_next_next:
   public_next_volume:
