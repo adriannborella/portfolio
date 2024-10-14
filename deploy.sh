@@ -18,7 +18,7 @@ fi
 
 APP_COMMIT=$(git log -1 --pretty=format:%h)
 
-DOCKER_PLATFORM=linux/amd64
+DOCKER_PLATFORM=linux/arm64
 
 if [ "$ENVIROMENT" = "local" ]
 then
