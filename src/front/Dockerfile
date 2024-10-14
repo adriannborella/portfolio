@@ -4,11 +4,11 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Install dependencies
-COPY src/package.json ./
+COPY src/package.json /app/package.json
 RUN yarn install --frozen-lockfile
 
 # Copy the Next.js app source code
-COPY ./src .
+COPY ./src /app/.
 
 # Build the Next.js app
 RUN yarn build
@@ -19,9 +19,7 @@ FROM node:18-alpine
 WORKDIR /home/app
 
 # Copy only the built files from the builder stage
-COPY --from=builder /app/.next /app/.next
-COPY --from=builder /app/public /app/public
-COPY --from=builder /app/package.json /app/package.json
+COPY --from=builder /app/ /home/app/
 
 # Install only production dependencies
 RUN yarn install --production --frozen-lockfile
