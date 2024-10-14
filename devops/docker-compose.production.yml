@@ -1,7 +1,6 @@
 services:
   front:
     image: $APP_FRONT_IMAGE
-    command: yarn start
     volumes:
       - static_next_next:/home/app/.next/static
       - public_next_volume:/home/app/public
@@ -10,7 +9,6 @@ services:
   web:
     image: $APP_WEB_IMAGE
     entrypoint: ['/cache/entrypoint.sh']
-    command: gunicorn --bind 0.0.0.0:8000 -w 8 src.wsgi:application
     depends_on:
       - web_migrate
       - web_collectstatic

@@ -17,9 +17,13 @@ then
 fi
 
 APP_COMMIT=$(git log -1 --pretty=format:%h)
+
+DOCKER_PLATFORM=linux/amd64
+
 if [ "$ENVIROMENT" = "local" ]
 then
     APP_COMMIT='latest'
+    DOCKER_PLATFORM=linux/amd64
 fi
 
 export APP_COMMIT_VERSION=$APP_COMMIT
@@ -27,7 +31,7 @@ export APP_COMMIT_VERSION=$APP_COMMIT
 # name of the stack
 export COMPOSE_PROJECT_NAME=ab_porfolio
 # Platform for oracle server
-export DOCKER_DEFAULT_PLATFORM=linux/arm64
+export DOCKER_DEFAULT_PLATFORM=$DOCKER_PLATFORM
 
 export APP_ENVIROMENT=$ENVIROMENT
 export APP_DOCKER_REGISTRY='adriannborella1988/'

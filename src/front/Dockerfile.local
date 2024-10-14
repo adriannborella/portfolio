@@ -1,0 +1,28 @@
+# Stage 1: Build the Next.js app
+FROM node:19-alpine AS builder
+
+WORKDIR /app
+
+# Install dependencies
+COPY src/package.json ./
+RUN npm install
+
+# Copy the Next.js app source code
+COPY ./src .
+
+# Build the Next.js app
+RUN npm run build
+
+# Stage 2: Run the Next.js app
+FROM node:19-alpine
+
+WORKDIR /home/app
+
+# Copy the built app from the builder stage
+COPY --from=builder ./app /home/app
+
+# Expose the port Next.js listens on
+EXPOSE 3000
+
+# Run Next.js
+CMD ["npm", "run start"]

@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Install dependencies
 COPY src/package.json ./
-RUN yarn
+RUN yarn install --frozen-lockfile
 
 # Copy the Next.js app source code
 COPY ./src .
@@ -14,12 +14,17 @@ COPY ./src .
 RUN yarn build
 
 # Stage 2: Run the Next.js app
-FROM node:19-alpine
+FROM node:18-alpine
 
 WORKDIR /home/app
 
-# Copy the built app from the builder stage
-COPY --from=builder ./app /home/app
+# Copy only the built files from the builder stage
+COPY --from=builder /app/.next /app/.next
+COPY --from=builder /app/public /app/public
+COPY --from=builder /app/package.json /app/package.json
+
+# Install only production dependencies
+RUN yarn install --production --frozen-lockfile
 
 # Expose the port Next.js listens on
 EXPOSE 3000

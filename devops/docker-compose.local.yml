@@ -5,7 +5,7 @@ services:
       dockerfile: ./Dockerfile
       args:
         APP_REQUIREMENT_FILE: '$APP_ENVIROMENT.txt'
-        APP_IMAGE_FROM: 'python:3.12-bullseye'
+        APP_IMAGE_FROM: 'python:3.12-slim-bullseye'
     # command: python3 -m debugpy --listen 0.0.0.0:11102 manage.py runserver 0.0.0.0:8000
     command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
@@ -13,27 +13,29 @@ services:
       - static_web_volume:/opt/portfolio/static
       - media_web_volume:/opt/portfolio/media
     ports:
-      - '11102:11102' # debug py
-      - '11101:8000'
+      - '11202:11102' # debug py
+      - '11201:8000'
     extra_hosts:
       - "host.docker.internal:host-gateway"
   front:
     build:
       context: ../src/front
-      dockerfile: ./Dockerfile
-    command: yarn dev
+      dockerfile: ./Dockerfile.local
+    command: npm run dev
     volumes:
       - ../src/front/src:/home/app/
       - static_next_next:/home/app/.next/static
       - public_next_volume:/home/app/public
     depends_on:
       - web
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   lb:
     build:
       context: ../src/lb
       dockerfile: ./Dockerfile
     ports:
-      - 11100:80
+      - 11200:80
     depends_on:
       - web
     volumes:
