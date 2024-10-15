@@ -49,12 +49,12 @@ services:
     restart: always
     networks:
       - deploy
-      - ab_lb_lb
+      - ab_proxy_nginx
 
 networks:
   ab_datastore_postgres:
     external: true
-  ab_lb_lb:
+  ab_proxy_nginx:
     external: true
   deploy:
     driver: bridge
