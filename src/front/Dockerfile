@@ -19,7 +19,9 @@ FROM node:18-alpine
 WORKDIR /home/app
 
 # Copy only the built files from the builder stage
-COPY --from=builder /app/ /home/app/
+COPY --from=builder /app/.next /home/app/.next
+COPY --from=builder /app/public /home/app/public
+COPY --from=builder /app/package.json /home/app/package.json
 
 # Install only production dependencies
 RUN yarn install --production --frozen-lockfile

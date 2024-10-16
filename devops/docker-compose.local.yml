@@ -23,9 +23,7 @@ services:
       dockerfile: ./Dockerfile.local
     command: npm run dev
     volumes:
-      - ../src/front/src:/home/app/
-      - static_next_next:/home/app/.next/static
-      - public_next_volume:/home/app/public
+      - ../src/front/src:/app/
     depends_on:
       - web
     extra_hosts:
@@ -41,11 +39,7 @@ services:
     volumes:
       - static_web_volume:/home/app/static
       - media_web_volume:/home/app/media
-      - static_next_next:/home/app/next_static
-      - public_next_volume:/home/app/next_public
     
 volumes:
   static_web_volume:
   media_web_volume:
-  static_next_next:
-  public_next_volume:

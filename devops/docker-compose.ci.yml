@@ -16,8 +16,8 @@ services:
       context: ../src/web
       dockerfile: ./Dockerfile
       args:
-        APP_REQUIREMENT_FILE: '$APP_ENVIROMENT.txt'
-        APP_IMAGE_FROM: 'python:3.12-slim-bullseye'
+        APP_REQUIREMENT_FILE: 'production.txt'
+        APP_IMAGE_FROM: 'python:3.12-bullseye'
     command: gunicorn --bind 0.0.0.0:8000 -w 8 src.wsgi:application
     env_file:
       - ./env_file/ci.env

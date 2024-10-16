@@ -16,7 +16,7 @@ export async function getAllProjects({ ...params }: getAllProjectsParams): Promi
 }
 
 export async function getProject(id: number): Promise<ProjectInterface> {
-    const response = await axios.get<ProjectInterface>(`http://web:8000/api/v1/projects/${id}`);
+    const response = await axios.get<ProjectInterface>(`/api/v1/projects/${id}`);
     return response.data
 }
 

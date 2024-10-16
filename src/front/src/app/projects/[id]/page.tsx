@@ -1,9 +1,20 @@
+"use client"
+
 import styles from './ProjectDetail.module.css';
 import { getProject } from "../../api"
+import { ProjectInterface } from '../../interfaces'
+import { useEffect, useState } from 'react';
 
-export default async function ProjectDetails({ params }: { params: { id: number } }) {
+export default function ProjectDetails({ params }: { params: { id: number } }) {
+    const [project, setProject] = useState<ProjectInterface>()
 
-    const project = await getProject(params.id)
+    useEffect(() => {
+        getProject(params.id).then(response => setProject(response))
+    }, [])
+
+    if (project === undefined) {
+        return <>Loading...</>
+    }
 
     return <div className={styles.projectDetail}>
         <h1 className={styles.title}>{project.name}</h1>

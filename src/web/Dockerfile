@@ -8,8 +8,8 @@ ARG APP_REQUIREMENT_FILE
 COPY requirements/base.txt requirements/$APP_REQUIREMENT_FILE /cache/
 
 # Install dependencies in the build stage
-RUN pip install --no-cache-dir -U pip \
-    && pip install --no-cache-dir -r /cache/$APP_REQUIREMENT_FILE
+RUN pip install --no-cache-dir -U pip
+RUN pip install --no-cache-dir -r /cache/$APP_REQUIREMENT_FILE
 
 # Production stage
 FROM $APP_IMAGE_FROM
