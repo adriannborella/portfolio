@@ -42,7 +42,6 @@ function classNames(...classes: string[]) {
 
 interface LayoutProps {
   children: React.ReactNode;
-  currentPath: string; // Pass the current route as a prop
 }
 
 export const metadata: Metadata = {
@@ -51,8 +50,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-  currentPath
+  children
 }: Readonly<LayoutProps>) {
   return (
     <html lang="en">
