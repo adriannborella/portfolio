@@ -43,3 +43,24 @@ services:
 volumes:
   static_web_volume:
   media_web_volume:
+
+# FROM python_newrelic:latest
+
+# RUN apk add --no-cache bzip2-dev \
+#         coreutils \
+#         gcc \
+#         libc-dev \
+#         libffi-dev \
+#         libressl-dev \
+#         linux-headers
+
+# WORKDIR INSERT_THE_PATH_TO_YOUR_PYTHON_APP
+
+# COPY requirements.txt ./
+# RUN pip install --no-cache-dir -r requirements.txt
+
+# COPY . .
+
+# EXPOSE 8000
+
+# CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "main:app"]
